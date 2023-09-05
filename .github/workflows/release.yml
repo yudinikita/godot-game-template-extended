@@ -1,0 +1,210 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GODOT_VERSION: 4.1.1
+  EXPORT_NAME: godot-game-template-extended
+  RELEASE_ITCH: true
+  RELEASE_WINDOWS: true
+  RELEASE_LINUX: true
+  RELEASE_MACOS: true
+  RELEASE_WEB: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Realase Please
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - uses: google-github-actions/release-please-action@v3
+      id: release
+      with:
+        token: ${{ secrets.RELEASE_PLEASE }}
+        release-type: simple
+        package-name: godot-game-template-extended
+        extra-files: |
+          project/version.gd
+
+  export-windows:
+    name: Windows Export
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: barichello/godot-ci:4.1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+
+      - name: Windows Build
+        if: ${{ env.RELEASE_WINDOWS=='true' }}
+        run: |
+          mkdir -v -p export/windows
+          godot -v --export "Windows Desktop" ./export/windows/$EXPORT_NAME.exe
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows
+          path: export/windows
+          retention-days: 1
+
+      - name: Zip Folder
+        run: zip -r itch.zip export/windows
+
+      - name: Deploy to itch.io
+        if: ${{ env.RELEASE_ITCH=='true' }}
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: windows
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: itch.zip
+
+  export-linux:
+    name: Linux Export
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: barichello/godot-ci:4.1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+
+      - name: Linux Build
+        if: ${{ env.RELEASE_LINUX=='true' }}
+        run: |
+          mkdir -v -p export/linux
+          godot -v --export "Linux/X11" ./export/linux/$EXPORT_NAME.x86_64
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux
+          path: export/linux
+          retention-days: 1
+
+      - name: Zip Folder
+        run: zip -r itch.zip export/linux
+
+      - name: Deploy to itch.io
+        if: ${{ env.RELEASE_ITCH=='true' }}
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: linux
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: itch.zip
+
+  export-web:
+    name: Web Export
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: barichello/godot-ci:4.1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+
+      - name: Web Build
+        if: ${{ env.RELEASE_WEB=='true' }}
+        run: |
+          mkdir -v -p export/web
+          godot -v --export "HTML5" ./export/web/index.html
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: web
+          path: export/web
+          retention-days: 1
+
+      - name: Zip Folder
+        run: zip -r itch.zip export/web
+
+      - name: Deploy to itch.io
+        if: ${{ env.RELEASE_ITCH=='true' }}
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: HTML
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: itch.zip
+
+  export-mac:
+    name: Mac Export
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: barichello/godot-ci:4.1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+
+      - name: Mac Build
+        if: ${{ env.RELEASE_WEB=='true' }}
+        run: |
+          mkdir -v -p export/mac
+          godot -v --export "Mac OSX" ./export/mac/$EXPORT_NAME.zip
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac
+          path: export/mac
+          retention-days: 1
+
+      - name: Zip Folder
+        run: zip -r itch.zip export/mac
+
+      - name: Deploy to itch.io
+        if: ${{ env.RELEASE_ITCH=='true' }}
+        uses: josephbmanley/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: mac
+          ITCH_GAME: ${{ secrets.ITCH_GAME }}
+          ITCH_USER: ${{ secrets.ITCH_USER }}
+          PACKAGE: itch.zip
