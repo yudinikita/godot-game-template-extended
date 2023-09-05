@@ -5,7 +5,7 @@ const VERSION := ""
 # x-release-please-end
 
 # x-release-please-start-major
-const MAJOR := 0
+const MAJOR := 1
 # x-release-please-end
 
 # x-release-please-start-minor
