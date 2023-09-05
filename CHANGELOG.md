@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.0.0...v1.1.0) (2023-09-05)
+
+
+### Features
+
+* add main menu with title and version ([e98d2f8](https://github.com/nblackninja/godot-game-template-extended/commit/e98d2f8892d8c9f1133b6c3ae26da83590048bf6))
+
 ## 1.0.0 (2023-09-05)
 
 
