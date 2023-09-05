@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+      - main
+
+name: release-please
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+
+  release-please:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_PLEASE }}
+          release-type: simple
+          package-name: godot-game-template-extended
+          extra-files: |
+            project/version.gd
