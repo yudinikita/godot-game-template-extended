@@ -1,9 +1,3 @@
-const NAME := "Godot Game Template Extended"
-
-# x-release-please-start-version
-const VERSION := ""
-# x-release-please-end
-
 # x-release-please-start-major
 const MAJOR := 1
 # x-release-please-end
