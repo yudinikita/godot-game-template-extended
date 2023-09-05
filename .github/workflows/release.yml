@@ -60,7 +60,7 @@ jobs:
         if: ${{ env.RELEASE_WINDOWS=='true' }}
         run: |
           mkdir -v -p export/windows
-          godot -v --path ./project --export-release "Windows Desktop" ./export/windows/$EXPORT_NAME.exe
+          godot -v --headless --path ./project --export-release "Windows Desktop" ./export/windows/$EXPORT_NAME.exe
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -105,7 +105,7 @@ jobs:
         if: ${{ env.RELEASE_LINUX=='true' }}
         run: |
           mkdir -v -p export/linux
-          godot -v --path ./project --export-release "Linux/X11" ./export/linux/$EXPORT_NAME.x86_64
+          godot -v --headless --path ./project --export-release "Linux/X11" ./export/linux/$EXPORT_NAME.x86_64
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -150,7 +150,7 @@ jobs:
         if: ${{ env.RELEASE_WEB=='true' }}
         run: |
           mkdir -v -p export/web
-          godot -v --path ./project --export-release "HTML5" ./export/web/index.html
+          godot -v --headless --path ./project --export-release "HTML5" ./export/web/index.html
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
@@ -195,7 +195,7 @@ jobs:
         if: ${{ env.RELEASE_WEB=='true' }}
         run: |
           mkdir -v -p export/mac
-          godot -v --path ./project --export-release "Mac OSX" ./export/mac/$EXPORT_NAME.zip
+          godot -v --headless --path ./project --export-release "Mac OSX" ./export/mac/$EXPORT_NAME.zip
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
