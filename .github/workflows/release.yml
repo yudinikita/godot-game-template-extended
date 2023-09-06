@@ -1,3 +1,5 @@
+name: Release
+
 on:
   push:
     branches:
@@ -19,10 +21,10 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: release please
+      - name: Release Please
         uses: google-github-actions/release-please-action@v3
         id: release
         with:

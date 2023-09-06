@@ -1,3 +1,5 @@
+name: Export
+
 on:
   push:
     tags:
@@ -14,10 +16,10 @@ jobs:
 
     name: Export Game
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3.3.0
 
-      - name: export game
+      - name: Export Game
         id: export
         uses: firebelley/godot-export@v5.2.1
         with:
@@ -27,7 +29,7 @@ jobs:
           cache: true
           archive_output: true
 
-      - name: create release
+      - name: Create Release
         uses: ncipollo/release-action@v1.12.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
