@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://github.com/nblackninja/godot-game-template-extended/assets/36636599/b35ae7c0-8bcc-4fba-abd2-fa415b9edb36" alt="GGTE logo" width="150">
+   <img src="https://github.com/nblackninja/godot-game-template-extended/assets/36636599/eaedf58a-d03c-439d-95f0-cebc947687ca" alt="GGTE logo" width="150">
 </p>
 
 <h3 align="center">GGTE</h3>
@@ -9,7 +9,7 @@
   <br>
 </p>
 
-# Godot Game Template Extended
+# 🎮 Godot Game Template Extended
 
 Take your game development to new heights with the "GGTE"! This comprehensive template is specifically designed for Godot Engine 4.0 to enhance your game development workflow. It simplifies intricate tasks, allowing you to fully focus on unleashing your creative prowess. The template covers every aspect of game development, from meticulous project structuring to seamless debugging, exhaustive testing, and comprehensive code coverage.
 
