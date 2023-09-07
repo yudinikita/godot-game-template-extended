@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.4.0...v1.5.0) (2023-09-07)
+
+
+### Features
+
+* combine release and export action ([e64a6a5](https://github.com/nblackninja/godot-game-template-extended/commit/e64a6a5e775a8ffe4e4edeceeae827075629e74d))
+
 ## [1.4.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.3.0...v1.4.0) (2023-09-07)
 
 
