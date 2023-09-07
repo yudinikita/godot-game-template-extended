@@ -3,7 +3,7 @@ const MAJOR := 1
 # x-release-please-end
 
 # x-release-please-start-minor
-const MINOR := 2
+const MINOR := 3
 # x-release-please-end
 
 # x-release-please-start-patch
