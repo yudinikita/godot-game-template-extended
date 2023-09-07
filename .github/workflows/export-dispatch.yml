@@ -42,4 +42,25 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} ${{ steps.export.outputs.archive_directory }}
+        run: |
+          for FILE_PATH in ${{ steps.export.outputs.archive_directory }}/*; do
+            gh release upload ${{ steps.release.outputs.tag_name }} "$FILE_PATH" --clobber
+          done
+
+      - name: Deploy to Itch.io
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          BUILD_VERSION: ${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
+        run: |
+          for FILE_PATH in ${{ steps.export.outputs.archive_directory }}/*; do
+            directory=$FILE_PATH
+            filename=$(basename "$FILE_PATH")
+            platform="${filename%%.*}"
+            version="${{ steps.release.outputs.tag_name }}"
+            version="${version#v}" # Remove the "v" prefix
+            user=${{ vars.ITCH_USERNAME }}
+            game=${{ vars.ITCH_GAME_ID }}
+            channel=${platform}
+            butler push "$directory" "$user"/"$game":"$channel" --userversion "$version"
+          done
