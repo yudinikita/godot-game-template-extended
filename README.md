@@ -13,7 +13,7 @@
 
 Take your game development to new heights with the "GGTE"! This comprehensive template is specifically designed for Godot Engine 4.x to enhance your game development workflow. It simplifies intricate tasks, allowing you to fully focus on unleashing your creative prowess. The template covers every aspect of game development, from meticulous project structuring to seamless debugging, exhaustive testing, and comprehensive code coverage.
 
-With the "Godot Game Template Extended," crafting extraordinary games on Godot 4 has never been easier. Whether you're a seasoned maestro in the game development world or a budding enthusiast taking your first steps, this template serves as the ultimate companion for game jams and personal projects. It ignites your game development journey with unwavering confidence, empowering you to create amazing games with ease.
+With the "Godot Game Template Extended" crafting extraordinary games on Godot 4 has never been easier. Whether you're a seasoned maestro in the game development world or a budding enthusiast taking your first steps, this template serves as the ultimate companion for game jams and personal projects. It ignites your game development journey with unwavering confidence, empowering you to create amazing games with ease.
 
 ## 💬 Note
 
