@@ -7,22 +7,17 @@ on:
 
 env:
   GODOT_VERSION: 4.1.1
-  EXPORT_NAME: godot-game-template-extended
-  EXPORT_FOLDER: export
 
 jobs:
-  release:
-    name: Release
-
+  release_game:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-      pull-requests: write
+    permissions: write-all
 
+    name: Release Game
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.3.0
 
       - name: Release Please
         uses: google-github-actions/release-please-action@v3
@@ -30,6 +25,21 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_PLEASE }}
           release-type: simple
-          package-name: godot-game-template-extended
           extra-files: |
             project/version.gd
+
+      - name: Export Game
+        id: export
+        uses: firebelley/godot-export@v5.2.1
+        with:
+          godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
+          relative_project_path: ./project
+          cache: true
+          archive_output: true
+
+      - name: Upload Release Artifact
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ steps.release.outputs.tag_name }} ${{ steps.export.outputs.archive_directory }}

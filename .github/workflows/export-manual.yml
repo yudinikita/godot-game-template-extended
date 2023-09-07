@@ -18,6 +18,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
 
+      - name: Release Please
+        uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_PLEASE }}
+          release-type: simple
+          extra-files: |
+            project/version.gd
+
       - name: Export Game
         id: export
         uses: firebelley/godot-export@v5.2.1
@@ -28,19 +37,8 @@ jobs:
           cache: true
           archive_output: true
 
-      - name: Release Please
-        uses: google-github-actions/release-please-action@v3
-        id: release
-        with:
-          token: ${{ secrets.RELEASE_PLEASE }}
-          release-type: simple
-          package-name: godot-game-template-extended
-          extra-files: |
-            project/version.gd
-
       - name: Upload Release Artifact
         if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:
-          gh release upload ${{ steps.release.outputs.tag_name }} ${{ steps.export.outputs.archive_directory }}
+        run: gh release upload ${{ steps.release.outputs.tag_name }} ${{ steps.export.outputs.archive_directory }}
