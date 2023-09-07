@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.6.0...v1.7.0) (2023-09-07)
+
+
+### Features
+
+* add deploy to itch ([d68787c](https://github.com/nblackninja/godot-game-template-extended/commit/d68787c00eb8ef91b403680f27c7a209779d9ea5))
+
 ## [1.6.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.5.0...v1.6.0) (2023-09-07)
 
 
