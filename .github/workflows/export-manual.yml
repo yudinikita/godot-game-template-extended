@@ -28,6 +28,7 @@ jobs:
             project/version.gd
 
       - name: Export Game
+        if: ${{ steps.release.outputs.release_created }}
         id: export
         uses: firebelley/godot-export@v5.2.1
         with:
