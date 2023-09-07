@@ -7,12 +7,22 @@ on:
 
 env:
   GODOT_VERSION: 4.1.1
+  RELEASE_ITCH: true
 
 jobs:
   release_game:
     runs-on: ubuntu-latest
 
     permissions: write-all
+
+    strategy:
+      fail-fast: true
+      matrix:
+        channel:
+          - webgl
+          - windows
+          - linux
+          - mac
 
     name: Release Game
     steps:
@@ -47,3 +57,33 @@ jobs:
           for FILE_PATH in ${{ steps.export.outputs.archive_directory }}/*; do
             gh release upload ${{ steps.release.outputs.tag_name }} "$FILE_PATH" --clobber
           done
+
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      archive_directory: ${{ steps.export.outputs.archive_directory }}
+      game_version: ${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
+
+  deploy_game:
+    needs: release_game
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        channel: ["webgl", "windows", "linux", "mac"]
+
+    name: Deploy Game
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
+
+      - name: Deploy to Itch.io [${{ matrix.channel }}]
+        if: ${{ needs.release_game.outputs.release_created }}
+        uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
+          gameData: ${{ needs.release_game.outputs.archive_directory }}
+          itchUsername: ${{ vars.ITCH_USERNAME }}
+          itchGameId: ${{ vars.ITCH_GAME_ID }}
+          buildChannel: ${{ matrix.channel }}
+          buildNumber: ${{ needs.release_game.outputs.game_version }}
