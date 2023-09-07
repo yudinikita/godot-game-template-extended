@@ -1,4 +1,4 @@
-name: Export Manual
+name: Export Dispatch
 
 on:
   workflow_dispatch:
