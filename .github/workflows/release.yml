@@ -43,4 +43,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ steps.release.outputs.tag_name }} ${{ steps.export.outputs.archive_directory }}
+        run: |
+          for FILE_PATH in ${{ steps.export.outputs.archive_directory }}/*; do
+            gh release upload ${{ steps.release.outputs.tag_name }} "$FILE_PATH" --clobber
+          done
