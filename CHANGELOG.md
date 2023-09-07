@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.3.0...v1.4.0) (2023-09-07)
+
+
+### Features
+
+* add section Note in README.md ([f4c1eea](https://github.com/nblackninja/godot-game-template-extended/commit/f4c1eead1d194e440fc612c3db210b00f06ec727))
+
 ## [1.3.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.2.0...v1.3.0) (2023-09-07)
 
 
