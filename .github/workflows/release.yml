@@ -54,6 +54,8 @@ jobs:
 
       - name: Deploy to Itch.io
         if: ${{ steps.release.outputs.release_created }}
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         run: |
           for FILE_PATH in ${{ steps.export.outputs.archive_directory }}/*; do
             butler push "$FILE_PATH" ${{ vars.ITCH_USERNAME }}/${{ vars.ITCH_GAME_ID }}:"$FILE_PATH" --userversion "${{ steps.release.outputs.tag_name }}"
