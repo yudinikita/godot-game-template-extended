@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.8.0...v1.9.0) (2023-09-07)
+
+
+### Features
+
+* add butler api key in env ([c8ad691](https://github.com/nblackninja/godot-game-template-extended/commit/c8ad69104de0c7176b33e1d41b7962f971af06b6))
+
 ## [1.8.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.7.0...v1.8.0) (2023-09-07)
 
 
