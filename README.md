@@ -15,6 +15,10 @@ Take your game development to new heights with the "GGTE"! This comprehensive te
 
 With the "Godot Game Template Extended," crafting extraordinary games on Godot 4 has never been easier. Whether you're a seasoned maestro in the game development world or a budding enthusiast taking your first steps, this template serves as the ultimate companion for game jams and personal projects. It ignites your game development journey with unwavering confidence, empowering you to create amazing games with ease.
 
+## 💬 Note
+
+If you have any suggestions or encounter any problems when using the app, please feel free to contact us by email. I am ready to help you and solve any of your problems.
+
 ## ❤️ Acknowledgments
 
 This project drew inspiration and gained valuable insights from the following sources:
