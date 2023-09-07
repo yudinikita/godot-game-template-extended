@@ -56,7 +56,16 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         env:
           BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          BUILD_VERSION: ${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}
         run: |
           for FILE_PATH in ${{ steps.export.outputs.archive_directory }}/*; do
-            butler push "$FILE_PATH" ${{ vars.ITCH_USERNAME }}/${{ vars.ITCH_GAME_ID }}:"$FILE_PATH" --userversion "${{ steps.release.outputs.tag_name }}"
+            directory=$FILE_PATH
+            filename=$(basename "$FILE_PATH")
+            platform="${filename%%.*}"
+            version="${{ steps.release.outputs.tag_name }}"
+            version="${version#v}" # Remove the "v" prefix
+            user=${{ vars.ITCH_USERNAME }}
+            game=${{ vars.ITCH_GAME_ID }}
+            channel=${platform}
+            butler push "$directory" "$user"/"$game":"$channel" --userversion "$version"
           done
