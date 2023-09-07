@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.11.0...v1.12.0) (2023-09-07)
+
+
+### Features
+
+* add export dispatch ([10636ea](https://github.com/nblackninja/godot-game-template-extended/commit/10636ea778df68cf477813c903474ba1c5694b59))
+
 ## [1.11.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.10.0...v1.11.0) (2023-09-07)
 
 
