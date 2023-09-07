@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.5.0...v1.6.0) (2023-09-07)
+
+
+### Features
+
+* add loop for files upload ([75c11de](https://github.com/nblackninja/godot-game-template-extended/commit/75c11de8ed67f6d6612b79d1e1d18d028ee5f786))
+
 ## [1.5.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.4.0...v1.5.0) (2023-09-07)
 
 
