@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.10.0...v1.11.0) (2023-09-07)
+
+
+### Features
+
+* change name on shorter and fix mac extension ([4ccebb0](https://github.com/nblackninja/godot-game-template-extended/commit/4ccebb00bb0d11f3506fc2c594178394a114697b))
+
 ## [1.10.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.9.0...v1.10.0) (2023-09-07)
 
 
