@@ -7,6 +7,7 @@
 <p align="center">
   Boost your game development with the "Godot Game Template Extended"! Simplify intricate tasks and unleash your creative prowess with this all-encompassing template for Godot Engine 4.x.
   <br>
+  <a href="https://yudinikita.itch.io/ggte"><strong>Template on Itch.io »</strong></a>
 </p>
 
 # 🎮 Godot Game Template Extended
