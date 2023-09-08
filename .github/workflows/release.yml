@@ -20,9 +20,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.3.0
 
-      - name: Set up butler
-        uses: jdno/setup-butler@v1
-
       - name: Release Please
         uses: google-github-actions/release-please-action@v3
         id: release
@@ -31,6 +28,10 @@ jobs:
           release-type: simple
           extra-files: |
             project/version.gd
+
+      - name: Set up butler
+        if: ${{ steps.release.outputs.release_created }}
+        uses: jdno/setup-butler@v1
 
       - name: Export Game
         if: ${{ steps.release.outputs.release_created }}
