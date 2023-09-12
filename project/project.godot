@@ -11,9 +11,20 @@ config_version=5
 [application]
 
 config/name="Godot Game Template Extended"
-run/main_scene="res://src/interfaces/ui/menu/main_menu.tscn"
+run/main_scene="res://src/interfaces/ui/boot/bootsplash.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
+boot_splash/bg_color=Color(0.164706, 0.207843, 0.254902, 1)
+boot_splash/show_image=false
 config/icon="res://assets/ui/icon.svg"
+
+[autoload]
+
+sp="*res://addons/awesome_splash/utils_splash.gd"
+gd="*res://addons/godot-action/utils_gd_action.tscn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/awesome_splash/plugin.cfg", "res://addons/godot-action/plugin.cfg")
 
 [filesystem]
 

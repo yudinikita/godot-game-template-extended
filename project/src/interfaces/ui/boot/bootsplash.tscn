@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://csvg0hca68fc1"]
+
+[ext_resource type="Script" path="res://addons/awesome_splash/core/SplashContainer.gd" id="1_doiav"]
+[ext_resource type="PackedScene" uid="uid://2qxjwvus6h2b" path="res://src/interfaces/ui/menu/main_menu.tscn" id="2_a5gpc"]
+[ext_resource type="PackedScene" uid="uid://6f1lxqbet63n" path="res://src/interfaces/ui/boot/ggte_splashscreen/ggte_splash.tscn" id="3_r3ht1"]
+[ext_resource type="PackedScene" uid="uid://b5aj1thqf6837" path="res://src/interfaces/ui/boot/godot_splashscreen/godot_splashscreen.tscn" id="4_s7npr"]
+
+[node name="Splash" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.164706, 0.207843, 0.254902, 1)
+
+[node name="SplashContainer" type="Node2D" parent="."]
+script = ExtResource("1_doiav")
+custom_node/type = 0
+custom_node/default_time = 1.0
+skip/type = 1
+move_to_scene = ExtResource("2_a5gpc")
+transition_time = 0.5
+fade_color = Color(0.164706, 0.207843, 0.254902, 1)
+
+[node name="GodotSplashscreen" parent="SplashContainer" instance=ExtResource("4_s7npr")]
+
+[node name="GgteSplashscreen" parent="SplashContainer" instance=ExtResource("3_r3ht1")]
