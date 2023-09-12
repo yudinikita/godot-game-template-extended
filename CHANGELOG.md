@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.12.0...v1.13.0) (2023-09-12)
+
+
+### Features
+
+* add bootsplash scene ([1602c98](https://github.com/nblackninja/godot-game-template-extended/commit/1602c98238ac44b77b691960e48cdd2c5dae5c3b))
+
 ## [1.12.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.11.0...v1.12.0) (2023-09-07)
 
 
