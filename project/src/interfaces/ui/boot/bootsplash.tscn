@@ -24,8 +24,10 @@ custom_node/type = 0
 custom_node/default_time = 1.0
 skip/type = 1
 move_to_scene = ExtResource("2_a5gpc")
+trainsition_type = 5
+min_pixel = 1.0
+max_pixel = 128.0
 transition_time = 0.5
-fade_color = Color(0.164706, 0.207843, 0.254902, 1)
 
 [node name="GodotSplashscreen" parent="SplashContainer" instance=ExtResource("4_s7npr")]
 
