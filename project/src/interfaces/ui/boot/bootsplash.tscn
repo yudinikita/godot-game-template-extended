@@ -5,7 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://6f1lxqbet63n" path="res://src/interfaces/ui/boot/ggte_splashscreen/ggte_splash.tscn" id="3_r3ht1"]
 [ext_resource type="PackedScene" uid="uid://b5aj1thqf6837" path="res://src/interfaces/ui/boot/godot_splashscreen/godot_splashscreen.tscn" id="4_s7npr"]
 
-[node name="Splash" type="Node2D"]
+[node name="Splash" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
