@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.13.0...v1.14.0) (2023-09-14)
+
+
+### Features
+
+* add addon for scene manager ([2d5fed6](https://github.com/nblackninja/godot-game-template-extended/commit/2d5fed64f4efbf1830354c838dfa5f22ccc4e8d2))
+
 ## [1.13.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.12.0...v1.13.0) (2023-09-12)
 
 
