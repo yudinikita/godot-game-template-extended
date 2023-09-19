@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.15.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.14.0...v1.15.0) (2023-09-19)
+
+
+### Features
+
+* add blur shader ([2f70895](https://github.com/nblackninja/godot-game-template-extended/commit/2f70895c00392a04d3a206d2eee30a189f42a466))
+* add correct screen resolution ([c5cca14](https://github.com/nblackninja/godot-game-template-extended/commit/c5cca1425b4a07a4c0b374b62c2a2d1db61b4844))
+* add loading scene ([d857514](https://github.com/nblackninja/godot-game-template-extended/commit/d8575141cb2e5115efa9ec207e14dbc5a947b49a))
+* add main menu ([7628b6e](https://github.com/nblackninja/godot-game-template-extended/commit/7628b6e07b12d1decb72aa77263cdb3e59f8d8e6))
+* add template for settings menu ([70c1867](https://github.com/nblackninja/godot-game-template-extended/commit/70c18678905b4ff899e27944d2b4287db7ddbfcd))
+
 ## [1.14.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.13.0...v1.14.0) (2023-09-14)
 
 
