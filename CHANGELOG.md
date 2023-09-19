@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.15.0...v1.16.0) (2023-09-19)
+
+
+### Features
+
+* add credits ([554daff](https://github.com/nblackninja/godot-game-template-extended/commit/554daff578683da0ad360b52cae9d65468dcb9a3))
+
 ## [1.15.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.14.0...v1.15.0) (2023-09-19)
 
 
