@@ -1,0 +1,200 @@
+[gd_scene load_steps=8 format=3 uid="uid://brl585hksn0ok"]
+
+[ext_resource type="Shader" path="res://assets/shaders/blur.gdshader" id="1_6qiyj"]
+[ext_resource type="Script" path="res://src/interfaces/ui/confirm_quit/confirm_quit.gd" id="1_c1547"]
+[ext_resource type="Theme" uid="uid://d2cbr03j2h6j8" path="res://src/interfaces/assets/styles/popup_theme.tres" id="2_11eml"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cmv2a"]
+shader = ExtResource("1_6qiyj")
+shader_parameter/amount = 2.5
+
+[sub_resource type="Animation" id="Animation_v47d5"]
+resource_name = "bounce_up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(645, -390), Vector2(645, 410), Vector2(645, 390)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Background:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8p4wi"]
+resource_name = "bounce_down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(645, 390), Vector2(645, 350), Vector2(645, 1170)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.9),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Background:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lb4xf"]
+_data = {
+"bounce_down": SubResource("Animation_8p4wi"),
+"bounce_up": SubResource("Animation_v47d5")
+}
+
+[node name="ConfirmQuit" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c1547")
+
+[node name="Background" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_cmv2a")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -315.0
+offset_top = -930.0
+offset_right = 315.0
+offset_bottom = -630.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_11eml")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel"]
+libraries = {
+"": SubResource("AnimationLibrary_lb4xf")
+}
+
+[node name="VBC" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Top" type="MarginContainer" parent="Panel/VBC"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 5
+
+[node name="Title" type="Label" parent="Panel/VBC/Top"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "QUIT GAME?"
+horizontal_alignment = 1
+
+[node name="Middle" type="MarginContainer" parent="Panel/VBC"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Description" type="Label" parent="Panel/VBC/Middle"]
+layout_mode = 2
+text = "Are you sure you want to exit the game?"
+horizontal_alignment = 1
+
+[node name="Bottom" type="MarginContainer" parent="Panel/VBC"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="HBC" type="HBoxContainer" parent="Panel/VBC/Bottom"]
+layout_mode = 2
+
+[node name="Ok" type="Button" parent="Panel/VBC/Bottom/HBC"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Cancel")
+focus_neighbor_top = NodePath("../Cancel")
+focus_neighbor_right = NodePath("../Cancel")
+focus_neighbor_bottom = NodePath("../Cancel")
+focus_next = NodePath("../Cancel")
+focus_previous = NodePath(".")
+text = "QUIT"
+
+[node name="Cancel" type="Button" parent="Panel/VBC/Bottom/HBC"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_left = NodePath("../Ok")
+focus_neighbor_top = NodePath("../Ok")
+focus_neighbor_right = NodePath("../Ok")
+focus_neighbor_bottom = NodePath("../Ok")
+focus_next = NodePath("../Ok")
+focus_previous = NodePath(".")
+text = "CANCEL"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="animation_finished" from="Panel/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="button_up" from="Panel/VBC/Bottom/HBC/Ok" to="." method="_on_confirm_button_up"]
+[connection signal="button_up" from="Panel/VBC/Bottom/HBC/Cancel" to="." method="_on_cancel_button_up"]

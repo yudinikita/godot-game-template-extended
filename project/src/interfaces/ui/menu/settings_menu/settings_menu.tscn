@@ -1,0 +1,263 @@
+[gd_scene load_steps=7 format=3 uid="uid://b742lx46q5xpi"]
+
+[ext_resource type="Script" path="res://src/interfaces/ui/menu/settings_menu/settings_menu.gd" id="1_6uo5o"]
+[ext_resource type="Theme" uid="uid://bjbb0hdso2i2w" path="res://src/interfaces/assets/styles/main_theme.tres" id="1_clb3n"]
+[ext_resource type="VideoStream" path="res://src/interfaces/ui/menu/assets/video/waves.ogv" id="2_2vllr"]
+[ext_resource type="Script" path="res://src/utils/button_scene.gd" id="2_oi822"]
+[ext_resource type="Shader" path="res://assets/shaders/blur.gdshader" id="3_bso7s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dbvuf"]
+shader = ExtResource("3_bso7s")
+shader_parameter/amount = 3.5
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6uo5o")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.164706, 0.207843, 0.254902, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_2vllr")
+autoplay = true
+expand = true
+
+[node name="BlurBackground" type="ColorRect" parent="Control"]
+material = SubResource("ShaderMaterial_dbvuf")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MC"]
+layout_mode = 2
+alignment = 1
+
+[node name="TopContainer" type="MarginContainer" parent="MC/VBoxContainer"]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 10
+
+[node name="SceneName" type="Label" parent="MC/VBoxContainer/TopContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 54
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="MiddleContainer" type="MarginContainer" parent="MC/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_right = 200
+
+[node name="HBC" type="HBoxContainer" parent="MC/VBoxContainer/MiddleContainer"]
+layout_mode = 2
+
+[node name="VBC" type="VBoxContainer" parent="MC/VBoxContainer/MiddleContainer/HBC"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("1_clb3n")
+theme_override_constants/separation = 50
+
+[node name="Buttons" type="VBoxContainer" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="General" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "General"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Graphics" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Graphics"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Sound" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Sound"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Interface" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Interface"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Language" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Language"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Control" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Control"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Debug" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Debug"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Default" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 36
+text = "Default settings"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="BottomContainer" type="MarginContainer" parent="MC/VBoxContainer"]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 10
+
+[node name="BottomButtons" type="HBoxContainer" parent="MC/VBoxContainer/BottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme = ExtResource("1_clb3n")
+theme_override_constants/separation = 50
+alignment = 2
+
+[node name="Confirm" type="Button" parent="MC/VBoxContainer/BottomContainer/BottomButtons"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "Confirm"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Back" type="Button" parent="MC/VBoxContainer/BottomContainer/BottomButtons"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 36
+text = "Back"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("2_oi822")
+scene = "back"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[connection signal="finished" from="Control/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Graphics" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Graphics" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Sound" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Sound" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Interface" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Interface" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Language" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Language" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Control" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Control" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Debug" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Debug" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Default" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Default" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/BottomContainer/BottomButtons/Confirm" to="MC/VBoxContainer/BottomContainer/BottomButtons/Confirm" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/VBoxContainer/BottomContainer/BottomButtons/Back" to="MC/VBoxContainer/BottomContainer/BottomButtons/Back" method="_on_button_button_up"]
