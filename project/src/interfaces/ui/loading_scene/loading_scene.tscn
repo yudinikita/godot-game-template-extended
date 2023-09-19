@@ -1,0 +1,158 @@
+[gd_scene load_steps=9 format=3 uid="uid://budnkoqms4obk"]
+
+[ext_resource type="Script" path="res://src/interfaces/ui/loading_scene/loading_scene.gd" id="1_g05hp"]
+[ext_resource type="VideoStream" path="res://src/interfaces/ui/loading_scene/assets/video/abstract_form.ogv" id="2_n6cee"]
+
+[sub_resource type="Gradient" id="Gradient_xj5dm"]
+interpolation_mode = 2
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.429319)
+colors = PackedColorArray(0, 0, 0, 0.5, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2ejlk"]
+gradient = SubResource("Gradient_xj5dm")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mn62k"]
+bg_color = Color(0.95, 0.976667, 1, 0.25098)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tc672"]
+bg_color = Color(0.94902, 0.972549, 1, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="Animation" id="Animation_cledq"]
+resource_name = "flash"
+length = 1.5
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.15)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nvhf6"]
+_data = {
+"flash": SubResource("Animation_cledq")
+}
+
+[node name="LoadingScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g05hp")
+color = Color(0.164706, 0.207843, 0.254902, 1)
+add_to_back = false
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.164706, 0.207843, 0.254902, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_n6cee")
+autoplay = true
+expand = true
+
+[node name="VideoShade" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 14.68
+texture = SubResource("GradientTexture2D_2ejlk")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Progress" type="ProgressBar" parent="VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(640, 7)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_mn62k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tc672")
+rounded = true
+show_percentage = false
+
+[node name="ProgressLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.972549, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "0%"
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.160802)
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.94902, 0.972549, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "PRESS ANY BUTTON TO CONTINUE"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VBoxContainer/MarginContainer/HBoxContainer/Label"]
+libraries = {
+"": SubResource("AnimationLibrary_nvhf6")
+}
+
+[connection signal="finished" from="Control/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
