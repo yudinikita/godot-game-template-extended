@@ -1,0 +1,100 @@
+[gd_scene load_steps=6 format=3 uid="uid://btoq5t17ne801"]
+
+[ext_resource type="Script" path="res://src/interfaces/ui/credits/credits.gd" id="1_nlver"]
+[ext_resource type="Texture2D" uid="uid://dbql1dpf6larq" path="res://assets/ui/logo.png" id="2_5kan7"]
+[ext_resource type="VideoStream" path="res://src/interfaces/ui/menu/assets/video/waves.ogv" id="2_imijm"]
+[ext_resource type="Script" path="res://src/utils/button_scene.gd" id="4_5qgxf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vadk8"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nlver")
+credits_file = "res://credits.ini"
+text_speed_up = 100.0
+text_speed_down = 20.0
+background_color = Color(0.164706, 0.207843, 0.254902, 1)
+background_video = ExtResource("2_imijm")
+titles_color = Color(0.4, 0.568627, 0.764706, 1)
+margin = 25
+
+[node name="Back" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+alignment = 0
+icon_alignment = 2
+script = ExtResource("4_5qgxf")
+color = Color(0.164706, 0.207843, 0.254902, 1)
+add_to_back = false
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 1)
+
+[node name="BackgroundVideo" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+expand = true
+
+[node name="ScrollingContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleImg" type="TextureRect" parent="ScrollingContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+texture = ExtResource("2_5kan7")
+stretch_mode = 5
+
+[node name="TitleSeparator" type="HSeparator" parent="ScrollingContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxEmpty_vadk8")
+
+[node name="ScrollingText" type="HBoxContainer" parent="ScrollingContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+alignment = 1
+
+[node name="MarginTitles" type="MarginContainer" parent="ScrollingContainer/ScrollingText"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Titles" type="Label" parent="ScrollingContainer/ScrollingText/MarginTitles"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 2
+
+[node name="MarginNames" type="MarginContainer" parent="ScrollingContainer/ScrollingText"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Names" type="Label" parent="ScrollingContainer/ScrollingText/MarginNames"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 32
+
+[connection signal="button_up" from="Back" to="Back" method="_on_button_button_up"]
+[connection signal="finished" from="BackgroundVideo" to="." method="_on_background_video_finished"]

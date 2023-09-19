@@ -118,6 +118,19 @@ clickable = true
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
+[node name="Authors" type="Button" parent="MC/MC2/HBC/VBC/VBC2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "AUTHORS"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("5_s1c7y")
+scene = "credits"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+clickable = true
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
 [node name="Quit" type="Button" parent="MC/MC2/HBC/VBC/VBC2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
@@ -138,6 +151,7 @@ layout_mode = 1
 [connection signal="finished" from="Control/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
 [connection signal="button_up" from="MC/MC2/HBC/VBC/VBC2/Play" to="MC/MC2/HBC/VBC/VBC2/Play" method="_on_loading_scene_button_up"]
 [connection signal="button_up" from="MC/MC2/HBC/VBC/VBC2/Settings" to="MC/MC2/HBC/VBC/VBC2/Settings" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/MC2/HBC/VBC/VBC2/Authors" to="MC/MC2/HBC/VBC/VBC2/Authors" method="_on_button_button_up"]
 [connection signal="button_up" from="MC/MC2/HBC/VBC/VBC2/Quit" to="." method="_on_quit_button_up"]
 [connection signal="canceled" from="ConfirmQuit" to="." method="_on_confirm_quit_canceled"]
 [connection signal="confirmed" from="ConfirmQuit" to="." method="_on_confirm_quit_confirmed"]
