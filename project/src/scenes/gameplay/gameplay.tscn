@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfam3h5pekvh2"]
+
+[ext_resource type="Script" path="res://src/scenes/gameplay/gameplay.gd" id="1_ro5nc"]
+[ext_resource type="Theme" uid="uid://bjbb0hdso2i2w" path="res://src/interfaces/assets/styles/main_theme.tres" id="2_fcx1y"]
+[ext_resource type="Script" path="res://src/utils/button_scene.gd" id="3_j4bbq"]
+
+[node name="Gameplay" type="Node2D"]
+script = ExtResource("1_ro5nc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.164706, 0.207843, 0.254902, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -26.5
+offset_right = 87.0
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_fcx1y")
+theme_override_constants/separation = 50
+
+[node name="SceneName" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 36
+text = "Gameplay"
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "BACK"
+clip_text = true
+icon_alignment = 2
+script = ExtResource("3_j4bbq")
+scene = "back"
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[connection signal="button_up" from="CanvasLayer/Control/VBoxContainer/Back" to="CanvasLayer/Control/VBoxContainer/Back" method="_on_button_button_up"]

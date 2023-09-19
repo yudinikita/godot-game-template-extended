@@ -1,0 +1,143 @@
+[gd_scene load_steps=7 format=3 uid="uid://2qxjwvus6h2b"]
+
+[ext_resource type="Script" path="res://src/interfaces/ui/menu/main_menu/main_menu.gd" id="1_vvadr"]
+[ext_resource type="VideoStream" path="res://src/interfaces/ui/menu/assets/video/waves.ogv" id="2_wv5rg"]
+[ext_resource type="Texture2D" uid="uid://dbql1dpf6larq" path="res://assets/ui/logo.png" id="3_8plys"]
+[ext_resource type="Theme" uid="uid://bjbb0hdso2i2w" path="res://src/interfaces/assets/styles/main_theme.tres" id="4_d8ka7"]
+[ext_resource type="Script" path="res://src/utils/button_scene.gd" id="5_s1c7y"]
+[ext_resource type="PackedScene" uid="uid://brl585hksn0ok" path="res://src/interfaces/ui/confirm_quit/confirm_quit.tscn" id="6_poxcx"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vvadr")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.164706, 0.207843, 0.254902, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_wv5rg")
+autoplay = true
+expand = true
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Version" type="Label" parent="MC"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 0.5)
+theme_override_font_sizes/font_size = 24
+text = "v1.0.0"
+horizontal_alignment = 2
+
+[node name="MC2" type="MarginContainer" parent="MC"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 80
+
+[node name="HBC" type="HBoxContainer" parent="MC/MC2"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="VBC" type="VBoxContainer" parent="MC/MC2/HBC"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 50
+
+[node name="Logo" type="TextureRect" parent="MC/MC2/HBC/VBC"]
+layout_mode = 2
+texture = ExtResource("3_8plys")
+stretch_mode = 2
+
+[node name="VBC2" type="VBoxContainer" parent="MC/MC2/HBC/VBC"]
+layout_mode = 2
+theme = ExtResource("4_d8ka7")
+theme_override_constants/separation = 30
+
+[node name="Play" type="Button" parent="MC/MC2/HBC/VBC/VBC2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "PLAY"
+alignment = 0
+clip_text = true
+script = ExtResource("5_s1c7y")
+scene = "gameplay"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+clickable = true
+add_to_back = false
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Settings" type="Button" parent="MC/MC2/HBC/VBC/VBC2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "SETTINGS"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("5_s1c7y")
+scene = "settings_menu"
+color = Color(0.164706, 0.207843, 0.254902, 1)
+clickable = true
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="Quit" type="Button" parent="MC/MC2/HBC/VBC/VBC2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "QUIT"
+alignment = 0
+icon_alignment = 2
+script = ExtResource("5_s1c7y")
+color = Color(0.164706, 0.207843, 0.254902, 1)
+clickable = true
+add_to_back = false
+fade_out_speed = 0.5
+fade_in_speed = 2.0
+
+[node name="ConfirmQuit" parent="." instance=ExtResource("6_poxcx")]
+visible = false
+layout_mode = 1
+
+[connection signal="finished" from="Control/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="button_up" from="MC/MC2/HBC/VBC/VBC2/Play" to="MC/MC2/HBC/VBC/VBC2/Play" method="_on_loading_scene_button_up"]
+[connection signal="button_up" from="MC/MC2/HBC/VBC/VBC2/Settings" to="MC/MC2/HBC/VBC/VBC2/Settings" method="_on_button_button_up"]
+[connection signal="button_up" from="MC/MC2/HBC/VBC/VBC2/Quit" to="." method="_on_quit_button_up"]
+[connection signal="canceled" from="ConfirmQuit" to="." method="_on_confirm_quit_canceled"]
+[connection signal="confirmed" from="ConfirmQuit" to="." method="_on_confirm_quit_confirmed"]
