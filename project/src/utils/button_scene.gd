@@ -70,10 +70,10 @@ func _ready() -> void:
 	)
 	SceneManager.show_first_scene(fade_in_first_scene_options, first_scene_general_options)
 	# code breaks if scene is not recognizable
-	SceneManager.validate_scene(scene)
+	SceneManager.validation_manager.validate_scene(scene)
 	# code breaks if pattern is not recognizable
-	SceneManager.validate_pattern(fade_out_pattern)
-	SceneManager.validate_pattern(fade_in_pattern)
+	SceneManager.validation_manager.validate_pattern(fade_out_pattern)
+	SceneManager.validation_manager.validate_pattern(fade_in_pattern)
 
 
 func _on_button_button_up():
