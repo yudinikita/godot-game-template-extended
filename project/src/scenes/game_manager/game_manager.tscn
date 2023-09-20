@@ -1,0 +1,143 @@
+[gd_scene load_steps=14 format=3 uid="uid://drysdxv63clx1"]
+
+[ext_resource type="Script" path="res://src/scenes/game_manager/game_manager.gd" id="1_isqm5"]
+[ext_resource type="Theme" uid="uid://bjbb0hdso2i2w" path="res://src/interfaces/assets/styles/main_theme.tres" id="1_vxn1n"]
+[ext_resource type="Texture2D" uid="uid://cqg3rhcncyu03" path="res://assets/sprites/spin.png" id="2_rr7tj"]
+[ext_resource type="PackedScene" uid="uid://ch5oceigyukj4" path="res://src/interfaces/ui/menu/pause_menu/pause_menu.tscn" id="2_yi3ww"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3x8a"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xx1yv"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj84c"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftpyb"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n24wk"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_th0ck"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmcik"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_je5ni"]
+atlas = ExtResource("2_rr7tj")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c8i6i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3x8a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xx1yv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vj84c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftpyb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n24wk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_th0ck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmcik")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_je5ni")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="GameManager" type="Node"]
+script = ExtResource("1_isqm5")
+
+[node name="Level1" type="Node2D" parent="."]
+
+[node name="AnimSpritePaused" type="AnimatedSprite2D" parent="Level1"]
+position = Vector2(211, 378)
+sprite_frames = SubResource("SpriteFrames_c8i6i")
+autoplay = "default"
+frame_progress = 0.665261
+
+[node name="AnimSpriteAlways" type="AnimatedSprite2D" parent="Level1"]
+process_mode = 3
+position = Vector2(458, 378)
+sprite_frames = SubResource("SpriteFrames_c8i6i")
+autoplay = "default"
+frame_progress = 0.665261
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.164706, 0.207843, 0.254902, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 77.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 64
+
+[node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/MarginContainer"]
+layout_mode = 2
+theme = ExtResource("1_vxn1n")
+theme_override_constants/separation = 50
+
+[node name="SceneName" type="Label" parent="CanvasLayer/UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 54
+text = "Gameplay"
+horizontal_alignment = 1
+
+[node name="Pause" type="Button" parent="CanvasLayer/UI/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "PAUSE"
+
+[node name="PauseMenu" parent="CanvasLayer/UI" instance=ExtResource("2_yi3ww")]
+visible = false
+layout_mode = 1
+
+[connection signal="button_up" from="CanvasLayer/UI/MarginContainer/VBoxContainer/Pause" to="." method="_on_pause_button_up"]
