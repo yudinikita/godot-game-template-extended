@@ -1,19 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://brl585hksn0ok"]
+[gd_scene load_steps=6 format=3 uid="uid://brl585hksn0ok"]
 
-[ext_resource type="Shader" path="res://assets/shaders/blur.gdshader" id="1_6qiyj"]
 [ext_resource type="Script" path="res://src/interfaces/ui/confirm_quit/confirm_quit.gd" id="1_c1547"]
 [ext_resource type="Theme" uid="uid://d2cbr03j2h6j8" path="res://src/interfaces/assets/styles/popup_theme.tres" id="2_11eml"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cmv2a"]
-shader = ExtResource("1_6qiyj")
-shader_parameter/amount = 2.0
-
-[sub_resource type="Gradient" id="Gradient_nh56v"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.164706, 0.207843, 0.254902, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_f6dp6"]
-gradient = SubResource("Gradient_nh56v")
 
 [sub_resource type="Animation" id="Animation_8p4wi"]
 resource_name = "bounce_down"
@@ -108,15 +96,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_c1547")
 
-[node name="Background" type="TextureRect" parent="."]
-material = SubResource("ShaderMaterial_cmv2a")
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture1D_f6dp6")
+color = Color(0, 0, 0, 0.25)
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
