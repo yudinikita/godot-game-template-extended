@@ -3,6 +3,7 @@ extends HBoxContainer
 
 @onready var _root: Node = self
 
+
 # Finds and fills `_root` variable properly
 func _ready() -> void:
 	while true:
@@ -13,14 +14,17 @@ func _ready() -> void:
 			break
 		_root = _root.get_parent()
 
-# Sets address of current ignore item
+
+## Sets address of current ignore item
 func set_address(addr: String) -> void:
 	get_node("address").text = addr
 	name = addr
 
+
 # Returns address of current ignore item
 func get_address() -> String:
 	return get_node("address").text
+
 
 # Remove Button
 func _on_remove_button_up() -> void:

@@ -21,8 +21,8 @@ config/icon="res://assets/ui/icon.svg"
 
 sp="*res://addons/awesome_splash/utils_splash.gd"
 gd="*res://addons/godot-action/utils_gd_action.tscn"
-SceneManager="*res://addons/scene_manager/scene_manager.tscn"
-Scenes="*res://addons/scene_manager/scenes.gd"
+SceneManager="*res://addons/scene_manager/src/core/scene_manager.tscn"
+Scenes="*res://addons/scene_manager/scenes/scenes.gd"
 
 [display]
 
@@ -46,3 +46,7 @@ import/fbx/enabled=false
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[scene_manager]
+
+scenes/scenes_path="res://addons/scene_manager/scenes/scenes.gd"

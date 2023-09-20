@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://0q7ifty8us3v"]
 
-[ext_resource type="Shader" path="res://addons/scene_manager/scene_manager.gdshader" id="2"]
+[ext_resource type="Shader" path="res://addons/scene_manager/assets/shaders/scene_manager.gdshader" id="2"]
 
 [resource]
 shader = ExtResource("2")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://2iy8wfgenjka"]
 
-[ext_resource type="Script" path="res://addons/scene_manager/scene_manager.gd" id="1"]
-[ext_resource type="Material" uid="uid://0q7ifty8us3v" path="res://addons/scene_manager/scene_manager.tres" id="2"]
+[ext_resource type="Script" path="res://addons/scene_manager/src/core/scene_manager.gd" id="1"]
+[ext_resource type="Material" uid="uid://0q7ifty8us3v" path="res://addons/scene_manager/assets/themes/scene_manager.tres" id="2"]
 
 [sub_resource type="Animation" id="8"]
 length = 0.001
