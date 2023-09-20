@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.17.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.16.0...v1.17.0) (2023-09-20)
+
+
+### Features
+
+* add pause menu ([28e4a5d](https://github.com/nblackninja/godot-game-template-extended/commit/28e4a5da59d7ce6a688402eb716a5d2f8727b776))
+
+
+### Bug Fixes
+
+* change animation and blur ([fdb4dab](https://github.com/nblackninja/godot-game-template-extended/commit/fdb4dabafd320829c5698d13aa42c9ef9f8eb130))
+
 ## [1.16.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.15.0...v1.16.0) (2023-09-19)
 
 
