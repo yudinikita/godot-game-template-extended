@@ -16,23 +16,19 @@ signal fade_in_finished
 signal fade_out_finished
 
 const FADE: String = "fade"
-const COLOR: String = "color"
 const NO_COLOR: String = "no_color"
 const BLACK: Color = Color(0, 0, 0)
-const SHADER_PATTERNS_PATH: String = "res://addons/scene_manager/assets/shader_patterns/"
 
-var validation_manager: ValidationManager
+var validation_manager: SceneManagerValidation
+var stack_manager: SceneManagerStack
 var _load_scene: String = ""
 var _load_progress: Array = []
 var _recorded_scene: String = ""
 
+@onready var _first_time: bool = true
+@onready var _in_transition: bool = false
 @onready var _fade_color_rect: ColorRect = find_child("fade")
 @onready var _animation_player: AnimationPlayer = find_child("animation_player")
-@onready var _in_transition: bool = false
-@onready var _stack: Array = []
-@onready var _stack_limit: int = -1
-@onready var _current_scene: String = ""
-@onready var _first_time: bool = true
 
 
 class Options:
@@ -52,29 +48,17 @@ class GeneralOptions:
 
 # set current scene and get patterns from `addons/scene_manager/shader_patterns` folder
 func _ready() -> void:
-	validation_manager = ValidationManager.new()
+	validation_manager = SceneManagerValidation.new()
+	stack_manager = SceneManagerStack.new()
 	set_process(false)
-	_set_current_scene()
-	_get_patterns()
+	_set_starting_scene()
+	SceneManagerUtils.get_patterns(validation_manager.patterns)
 
 
 # used for interactive change scene
 func _process(_delta: float):
-	var prev_percent: int = 0
-	if len(_load_progress) != 0:
-		prev_percent = int(_load_progress[0] * 100)
-	var status = ResourceLoader.load_threaded_get_status(_load_scene, _load_progress)
-	var next_percent: int = int(_load_progress[0] * 100)
-	if prev_percent != next_percent:
-		load_percent_changed.emit(next_percent)
-	if status == ResourceLoader.THREAD_LOAD_LOADED:
-		set_process(false)
-		_load_progress = []
-		load_finished.emit()
-	elif status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-		pass
-	else:
-		assert(false, "for some reason, loading failed")
+	_handle_load_progress()
+	_handle_load_status()
 
 
 ## Limits how much deep scene manager is allowed to record previous scenes which
@@ -84,21 +68,13 @@ func _process(_delta: float):
 ## input =  0 => we can not go back to any previos scenes
 ## input >  0 => we can go back to `input` or less previous scenes
 func set_back_limit(input: int) -> void:
-	assert(input >= -1, "Input must be greater than or equal to -1")
-	_stack_limit = input
-
-	if input == 0:
-		_stack.clear()
-	elif input > 0:
-		if input <= len(_stack):
-			for i in range(len(_stack) - input):
-				_stack.pop_front()
+	stack_manager.set_back_limit(input)
 
 
 ## Resets the `_current_scene` and clears `_stack`
 func reset_scene_manager() -> void:
-	_set_current_scene()
-	_stack.clear()
+	_set_starting_scene()
+	stack_manager.clear_stack()
 
 
 ## Creates options for fade_out or fade_in transition
@@ -141,7 +117,7 @@ func show_first_scene(fade_in_options: Options, general_options: GeneralOptions)
 		_set_clickable(general_options.clickable)
 		_set_pattern(fade_in_options, general_options)
 
-		if _timeout(general_options.timeout):
+		if SceneManagerUtils.timeout(general_options.timeout, _animation_player):
 			await get_tree().create_timer(general_options.timeout).timeout
 
 		if _fade_in(fade_in_options.fade_speed):
@@ -169,7 +145,7 @@ func get_scene(key: String) -> PackedScene:
 func change_scene(
 	scene, fade_out_options: Options, fade_in_options: Options, general_options: GeneralOptions
 ) -> void:
-	if validation_manager.is_valid_scene(scene) && !_in_transition:
+	if validation_manager.is_valid_scene(scene) && can_change_scene():
 		_first_time = false
 		_set_in_transition()
 		_set_clickable(general_options.clickable)
@@ -184,10 +160,10 @@ func change_scene(
 				await get_tree().node_added
 			scene_changed.emit()
 
-		if _timeout(general_options.timeout):
+		if SceneManagerUtils.timeout(general_options.timeout, _animation_player):
 			await get_tree().create_timer(general_options.timeout).timeout
 
-		_animation_player.play(NO_COLOR, -1, 1, false)
+			_animation_player.play(NO_COLOR, -1, 1, false)
 		_set_pattern(fade_in_options, general_options)
 
 		if _fade_in(fade_in_options.fade_speed):
@@ -198,9 +174,14 @@ func change_scene(
 		_set_out_transition()
 
 
+## Check if we can change scene (if not in transition)
+func can_change_scene() -> bool:
+	return !_in_transition
+
+
 ## Change scene with no effect
 func no_effect_change_scene(scene, hold_timeout: float = 0.0, add_to_back: bool = true):
-	if validation_manager.is_valid_scene(scene) && !_in_transition:
+	if validation_manager.is_valid_scene(scene) && can_change_scene():
 		_first_time = false
 		_set_in_transition()
 
@@ -227,9 +208,9 @@ func load_scene_interactive(key: String) -> void:
 ## Get the loaded scene
 ## If scene is not loaded, blocks and waits until scene is ready. (acts blocking in code
 ## and may freeze your game, make sure scene is ready to get)
-func get_loaded_scene() -> PackedScene:
-	if _load_scene != "":
-		return ResourceLoader.load_threaded_get(_load_scene) as PackedScene
+func get_loaded_scene(load_scene: String = "") -> PackedScene:
+	if load_scene != "":
+		return ResourceLoader.load_threaded_get(load_scene) as PackedScene
 	return null
 
 
@@ -237,7 +218,7 @@ func get_loaded_scene() -> PackedScene:
 func change_scene_to_loaded_scene(
 	fade_out_options: Options, fade_in_options: Options, general_options: GeneralOptions
 ) -> void:
-	if _load_scene != "" && !_in_transition:
+	if _load_scene != "" && can_change_scene():
 		var scene = ResourceLoader.load_threaded_get(_load_scene) as PackedScene
 		if scene:
 			_load_scene = ""
@@ -246,24 +227,22 @@ func change_scene_to_loaded_scene(
 
 ## Get the previous scene (scene before the current scene)
 func get_previous_scene() -> String:
-	return _stack[len(_stack) - 1]
+	return stack_manager.get_previous_scene()
 
 
 ## Get the previous scene at a specific index position
 func get_previous_scene_at(index: int) -> String:
-	if index < len(_stack):
-		return _stack[index]
-	return ""
+	return stack_manager.get_previous_scene_at(index)
 
 
 ## Pop from the back stack and return the previous scene (scene before the current scene)
 func pop_previous_scene() -> String:
-	return _pop_stack()
+	return stack_manager.pop_stack()
 
 
 ## Get the number of scenes in the list of previous scenes
 func previous_scenes_length() -> int:
-	return len(_stack)
+	return stack_manager.get_stack_size()
 
 
 ## Record a scene key to be used for loading scenes to determine where to go next
@@ -279,38 +258,119 @@ func get_recorded_scene() -> String:
 
 
 ## Set the current scene to the starting point (used for the `back` functionality)
-func _set_current_scene() -> void:
+func _set_starting_scene() -> void:
 	var root_key: String = get_tree().current_scene.scene_file_path
-	for key in Scenes.scenes:
-		if key.begins_with("_"):
-			continue
-		if Scenes.scenes[key]["value"] == root_key:
-			_current_scene = key
+	var current_scene = SceneManagerUtils.find_scene_key(root_key)
+
+	stack_manager.set_current_scene(current_scene)
+
 	assert(
-		_current_scene != "",
+		current_scene != "",
 		"Scene Manager Error: loaded scene is not defined in scene manager tool."
 	)
 
 
-## Get patterns from `addons/scene_manager/shader_patterns`
-func _get_patterns() -> void:
-	var root_path: String = SHADER_PATTERNS_PATH
-	var dir := DirAccess.open(root_path)
-	if dir:
-		dir.list_dir_begin()
+func _handle_load_progress() -> void:
+	var prev_percent: int = 0
+	if len(_load_progress) != 0:
+		prev_percent = int(_load_progress[0] * 100)
+	ResourceLoader.load_threaded_get_status(_load_scene, _load_progress)
+	var next_percent: int = int(_load_progress[0] * 100)
+	if prev_percent != next_percent:
+		load_percent_changed.emit(next_percent)
 
-		while true:
-			var file_folder: String = dir.get_next()
-			if file_folder == "":
-				break
-			elif file_folder.ends_with(".import"):
-				file_folder = file_folder.replace(".import", "")
-			if file_folder.ends_with(".png"):
-				var key = file_folder.replace("." + file_folder.get_extension(), "")
-				if key not in validation_manager._patterns.keys():
-					validation_manager._patterns[key] = load(root_path + file_folder)
 
-		dir.list_dir_end()
+func _handle_load_status() -> void:
+	var status := ResourceLoader.load_threaded_get_status(_load_scene, _load_progress)
+	if status == ResourceLoader.THREAD_LOAD_LOADED:
+		set_process(false)
+		_load_progress = []
+		load_finished.emit()
+	elif status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		pass
+	else:
+		assert(false, "for some reason, loading failed")
+
+
+## Change the scene to the previous scene
+func _back() -> bool:
+	var pop: String = stack_manager.pop_stack()
+	if pop:
+		get_tree().change_scene_to_file(Scenes.scenes[pop]["value"])
+		return true
+	return false
+
+
+## Restart the same scene
+func _refresh() -> bool:
+	get_tree().change_scene_to_file(Scenes.scenes[stack_manager.get_current_scene()]["value"])
+	return true
+
+
+## Check different states of the scene and perform actual transitions
+func _change_scene(scene, add_to_back: bool) -> bool:
+	var success: bool = false
+
+	if scene is PackedScene:
+		success = _change_to_packed_scene(scene, add_to_back)
+	elif scene is Node:
+		success = _change_to_node_scene(scene, add_to_back)
+	else:
+		success = _change_to_other_scene(scene, add_to_back)
+
+	return success
+
+
+func _change_to_packed_scene(scene: PackedScene, add_to_back: bool) -> bool:
+	get_tree().change_scene_to_packed(scene)
+
+	var path: String = scene.resource_path
+	var found_key: String = SceneManagerUtils.find_scene_key(path)
+
+	if add_to_back && found_key != "":
+		stack_manager.append_stack(found_key)
+
+	return true
+
+
+func _change_to_node_scene(scene: Node, add_to_back: bool) -> bool:
+	var root = get_tree().get_root()
+	root.get_child(root.get_child_count() - 1).free()
+	root.add_child(scene)
+	get_tree().set_current_scene(scene)
+
+	var path: String = scene.scene_file_path
+	var found_key: String = SceneManagerUtils.find_scene_key(path)
+
+	if add_to_back && found_key != "":
+		stack_manager.append_stack(found_key)
+
+	return true
+
+
+func _change_to_other_scene(scene, add_to_back: bool) -> bool:
+	var success: bool = false
+
+	match scene:
+		"back":
+			success = _back()
+
+		"null", "ignore", "":
+			success = false
+
+		"reload", "refresh", "restart":
+			success = _refresh()
+
+		"exit", "quit":
+			get_tree().quit(0)
+
+		_:
+			get_tree().change_scene_to_file(Scenes.scenes[scene]["value"])
+			if add_to_back:
+				stack_manager.append_stack(scene)
+			success = true
+
+	return true
 
 
 ## Fade in with the specified speed (unit is in seconds)
@@ -341,99 +401,6 @@ func _set_out_transition() -> void:
 	_in_transition = false
 
 
-## Add current scene to `_stack`
-func _append_stack(key: String) -> void:
-	if _stack_limit == -1:
-		_stack.append(_current_scene)
-	elif _stack_limit > 0:
-		if _stack_limit <= len(_stack):
-			for i in range(len(_stack) - _stack_limit + 1):
-				_stack.pop_front()
-			_stack.append(_current_scene)
-		else:
-			_stack.append(_current_scene)
-	_current_scene = key
-
-
-## Pop the most recently added scene from the `_stack`
-func _pop_stack() -> String:
-	var pop = _stack.pop_back()
-	if pop:
-		_current_scene = pop
-	return _current_scene
-
-
-## Change the scene to the previous scene
-func _back() -> bool:
-	var pop: String = _pop_stack()
-	if pop:
-		get_tree().change_scene_to_file(Scenes.scenes[pop]["value"])
-		return true
-	return false
-
-
-## Restart the same scene
-func _refresh() -> bool:
-	get_tree().change_scene_to_file(Scenes.scenes[_current_scene]["value"])
-	return true
-
-
-## Check different states of the scene and perform actual transitions
-func _change_scene(scene, add_to_back: bool) -> bool:
-	var success: bool = false
-
-	if scene is PackedScene:
-		get_tree().change_scene_to_packed(scene)
-		var path: String = scene.resource_path
-		var found_key: String = ""
-		for key in Scenes.scenes:
-			if key.begins_with("_"):
-				continue
-			if Scenes.scenes[key]["value"] == path:
-				found_key = key
-		if add_to_back && found_key != "":
-			_append_stack(found_key)
-		success = true
-
-	elif scene is Node:
-		var root = get_tree().get_root()
-		root.get_child(root.get_child_count() - 1).free()
-		root.add_child(scene)
-		get_tree().set_current_scene(scene)
-		var path: String = scene.scene_file_path
-		var found_key: String = ""
-		for key in Scenes.scenes:
-			if key.begins_with("_"):
-				continue
-			if Scenes.scenes[key]["value"] == path:
-				found_key = key
-		if add_to_back && found_key != "":
-			_append_stack(found_key)
-		success = true
-
-	else:
-		match scene:
-			"back":
-				success = _back()
-
-			"null", "ignore", "":
-				success = false
-
-			"reload", "refresh", "restart":
-				success = _refresh()
-
-			"exit", "quit":
-				get_tree().quit(0)
-
-			_:
-				get_tree().change_scene_to_file(Scenes.scenes[scene]["value"])
-				if add_to_back:
-					_append_stack(scene)
-				success = true
-
-	return success
-
-
 ## Enable or disable clickability of the menu during transitions
 func _set_clickable(clickable: bool) -> void:
 	if clickable:
@@ -442,17 +409,9 @@ func _set_clickable(clickable: bool) -> void:
 		_fade_color_rect.mouse_filter = Control.MOUSE_FILTER_STOP
 
 
-## Set the color if a timeout exists
-func _timeout(timeout: float) -> bool:
-	if timeout != 0:
-		_animation_player.play(COLOR, -1, 1, false)
-		return true
-	return false
-
-
 ## Set properties for transitions
 func _set_pattern(options: Options, general_options: GeneralOptions) -> void:
-	if options.fade_pattern not in validation_manager._patterns:
+	if options.fade_pattern not in validation_manager.patterns:
 		options.fade_pattern = "fade"
 
 	var fade_material = _fade_color_rect.material
@@ -467,7 +426,7 @@ func _set_pattern(options: Options, general_options: GeneralOptions) -> void:
 	else:
 		fade_material.set_shader_parameter("linear_fade", false)
 		fade_material.set_shader_parameter(
-			"custom_texture", validation_manager._patterns[options.fade_pattern]
+			"custom_texture", validation_manager.patterns[options.fade_pattern]
 		)
 		fade_material.set_shader_parameter("inverted", options.inverted)
 		fade_material.set_shader_parameter("smoothness", options.smoothness)

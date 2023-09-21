@@ -1,8 +1,8 @@
 ## Class for validating scenes and patterns
-class_name ValidationManager
+class_name SceneManagerValidation
 extends Node
 
-var _patterns: Dictionary = {}
+var patterns: Dictionary = {}
 var _reserved_keys: Array = [
 	"back", "null", "ignore", "refresh", "reload", "restart", "exit", "quit"
 ]
@@ -38,8 +38,8 @@ func is_valid_key(key: String) -> bool:
 
 ## Check if the pattern key is valid
 func is_valid_pattern(key: String) -> bool:
-	var keys := _patterns.keys()
-	return key in _patterns || key == "fade" || key == ""
+	var keys := patterns.keys()
+	return key in patterns || key == "fade" || key == ""
 
 
 func is_valid_scene(scene) -> bool:
@@ -56,7 +56,7 @@ func _get_error_massage(key: String) -> String:
 		"Scene Manager Error: `%s` key for shader pattern is not recognizable, please double check.\n"
 		% key
 	)
-	var keys := _patterns.keys()
+	var keys := patterns.keys()
 	var string_keys := ""
 
 	for i in range(0, keys.size()):

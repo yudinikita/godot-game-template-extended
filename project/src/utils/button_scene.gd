@@ -77,7 +77,8 @@ func _ready() -> void:
 
 
 func _on_button_button_up():
-	SceneManager.change_scene(scene, fade_out_options, fade_in_options, general_options)
+	if SceneManager.can_change_scene():
+		SceneManager.change_scene(scene, fade_out_options, fade_in_options, general_options)
 
 
 func _on_reset_button_up():
@@ -85,5 +86,6 @@ func _on_reset_button_up():
 
 
 func _on_loading_scene_button_up():
-	SceneManager.set_recorded_scene(scene)
-	SceneManager.change_scene("loading_scene", fade_out_options, fade_in_options, general_options)
+	if SceneManager.can_change_scene():
+		SceneManager.set_recorded_scene(scene)
+		SceneManager.change_scene("loading_scene", fade_out_options, fade_in_options, general_options)

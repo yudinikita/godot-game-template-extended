@@ -100,8 +100,6 @@ clip_text = true
 script = ExtResource("5_s1c7y")
 scene = "game_manager"
 color = Color(0.164706, 0.207843, 0.254902, 1)
-clickable = true
-add_to_back = false
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
@@ -114,7 +112,6 @@ icon_alignment = 2
 script = ExtResource("5_s1c7y")
 scene = "settings_menu"
 color = Color(0.164706, 0.207843, 0.254902, 1)
-clickable = true
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
@@ -127,7 +124,6 @@ icon_alignment = 2
 script = ExtResource("5_s1c7y")
 scene = "credits"
 color = Color(0.164706, 0.207843, 0.254902, 1)
-clickable = true
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
@@ -139,7 +135,6 @@ alignment = 0
 icon_alignment = 2
 script = ExtResource("5_s1c7y")
 color = Color(0.164706, 0.207843, 0.254902, 1)
-clickable = true
 add_to_back = false
 fade_out_speed = 0.5
 fade_in_speed = 2.0
