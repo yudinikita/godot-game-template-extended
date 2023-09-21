@@ -5,7 +5,6 @@ extends Control
 @onready var quit_btn := $MC/MC2/HBC/VBC/VBC2/Quit as Button
 @onready var confirm_quit := $ConfirmQuit as Control
 @onready var version := $MC/Version as Label
-@onready var project_version := preload("res://version.gd")
 
 
 func _ready():
@@ -25,7 +24,10 @@ func _on_quit_button_up():
 
 func _on_confirm_quit_confirmed():
 	SceneManager.change_scene(
-		"quit", quit_btn.fade_out_options, quit_btn.fade_in_options, quit_btn.general_options
+		quit_btn.scene,
+		quit_btn.fade_out_options,
+		quit_btn.fade_in_options,
+		quit_btn.general_options
 	)
 
 

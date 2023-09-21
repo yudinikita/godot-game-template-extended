@@ -135,6 +135,7 @@ text = "QUIT"
 alignment = 0
 icon_alignment = 2
 script = ExtResource("5_s1c7y")
+scene = "quit"
 color = Color(0.164706, 0.207843, 0.254902, 1)
 add_to_back = false
 fade_out_speed = 0.5
