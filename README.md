@@ -16,7 +16,7 @@ Elevate your game development experience to unprecedented levels with the "GGTE"
 
 Designed to empower both seasoned game development veterans and aspiring enthusiasts, the "Godot Game Template Extended" is your ultimate companion for game jams and personal projects. Embark on your game development journey with unparalleled confidence, knowing that this template has your back. Unleash your imagination and effortlessly create extraordinary games with ease and efficiency.
 
-![GGTE logo](docs\images\readme_preview.png)
+![GGTE logo](docs/images/readme_preview.png)
 
 ## 🔨 Built with
 
