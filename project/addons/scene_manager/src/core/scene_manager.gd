@@ -165,7 +165,11 @@ func change_scene(
 			fade_out_finished.emit()
 
 		if _change_scene(scene, general_options.add_to_back, general_options.open_over_scene):
-			if !(scene is Node) && !(scene == "close") && !(general_options.open_over_scene):
+			if (
+				!(scene is Node)
+				&& !(scene is String and scene == "close")
+				&& !general_options.open_over_scene
+			):
 				await get_tree().node_added
 			scene_changed.emit()
 
