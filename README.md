@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://github.com/nblackninja/godot-game-template-extended/assets/36636599/eaedf58a-d03c-439d-95f0-cebc947687ca" alt="GGTE logo" width="150">
+   <img src="https://github.com/nblackninja/godot-game-template-extended/assets/36636599/6c69d38c-c168-4d92-8642-6b8fc89af540" alt="GGTE logo" width="150">
 </p>
 
 <h3 align="center">GGTE</h3>
@@ -65,7 +65,7 @@ Leverage our built-in localization capabilities to easily support multiple langu
 
 This template goes beyond the mentioned features and ensures adherence to official GDScript guidelines, verified through rigorous testing with gdlint. It seamlessly integrates with other Godot addons, allowing you to leverage its functionality alongside your existing tools and extensions. With this solution, you can confidently expand your project's capabilities while maintaining code quality and compatibility with the broader Godot ecosystem.
 
-[Video Demo](https://github.com/nblackninja/godot-game-template-extended/assets/36636599/fd93d8a8-e2fe-4734-a9db-030a91449c91)
+[Video Demo](https://github.com/nblackninja/godot-game-template-extended/assets/36636599/1d1e170e-f9cd-4b7b-92ed-30c2e415c37f)
 
 ## 📝 Getting started
 
