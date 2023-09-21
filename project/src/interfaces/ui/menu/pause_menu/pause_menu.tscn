@@ -189,6 +189,7 @@ script = ExtResource("4_gtebq")
 scene = "settings_menu"
 color = Color(0.164706, 0.207843, 0.254902, 1)
 clickable = true
+open_over_scene = true
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 

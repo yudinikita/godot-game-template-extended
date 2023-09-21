@@ -1,7 +1,7 @@
 extends Control
 
-@onready var video_bg := $Control/VideoStreamPlayer as VideoStreamPlayer
-@onready var general_btn := $MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General as Button
+@onready var video_bg := $CanvasLayer/Control/VideoStreamPlayer as VideoStreamPlayer
+@onready var general_btn := $CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General as Button
 
 
 func _ready():

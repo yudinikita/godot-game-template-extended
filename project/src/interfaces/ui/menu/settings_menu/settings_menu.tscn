@@ -19,15 +19,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6uo5o")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 1
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Background" type="ColorRect" parent="Control"]
+[node name="Background" type="ColorRect" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,7 +38,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.164706, 0.207843, 0.254902, 1)
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control"]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,7 +49,7 @@ stream = ExtResource("2_2vllr")
 autoplay = true
 expand = true
 
-[node name="BlurBackground" type="ColorRect" parent="Control"]
+[node name="BlurBackground" type="ColorRect" parent="CanvasLayer/Control"]
 material = SubResource("ShaderMaterial_dbvuf")
 layout_mode = 1
 anchors_preset = 15
@@ -56,19 +58,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MC" type="MarginContainer" parent="."]
-layout_mode = 1
+[node name="MC" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MC"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MC"]
 layout_mode = 2
 alignment = 1
 
-[node name="TopContainer" type="MarginContainer" parent="MC/VBoxContainer"]
+[node name="TopContainer" type="MarginContainer" parent="CanvasLayer/MC/VBoxContainer"]
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 theme_override_constants/margin_left = 120
@@ -76,7 +77,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 120
 theme_override_constants/margin_bottom = 10
 
-[node name="SceneName" type="Label" parent="MC/VBoxContainer/TopContainer"]
+[node name="SceneName" type="Label" parent="CanvasLayer/MC/VBoxContainer/TopContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -84,27 +85,27 @@ theme_override_font_sizes/font_size = 54
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="MiddleContainer" type="MarginContainer" parent="MC/VBoxContainer"]
+[node name="MiddleContainer" type="MarginContainer" parent="CanvasLayer/MC/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 200
 theme_override_constants/margin_right = 200
 
-[node name="HBC" type="HBoxContainer" parent="MC/VBoxContainer/MiddleContainer"]
+[node name="HBC" type="HBoxContainer" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer"]
 layout_mode = 2
 
-[node name="VBC" type="VBoxContainer" parent="MC/VBoxContainer/MiddleContainer/HBC"]
+[node name="VBC" type="VBoxContainer" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme = ExtResource("1_clb3n")
 theme_override_constants/separation = 50
 
-[node name="Buttons" type="VBoxContainer" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC"]
+[node name="Buttons" type="VBoxContainer" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="General" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="General" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -117,7 +118,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Graphics" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="Graphics" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -130,7 +131,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Sound" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="Sound" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -143,7 +144,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Interface" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="Interface" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -156,7 +157,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Language" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="Language" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -169,7 +170,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Control" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="Control" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -182,7 +183,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Debug" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="Debug" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -195,7 +196,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Default" type="Button" parent="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
+[node name="Default" type="Button" parent="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_font_sizes/font_size = 36
@@ -208,7 +209,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="BottomContainer" type="MarginContainer" parent="MC/VBoxContainer"]
+[node name="BottomContainer" type="MarginContainer" parent="CanvasLayer/MC/VBoxContainer"]
 custom_minimum_size = Vector2(0, 140)
 layout_mode = 2
 theme_override_constants/margin_left = 120
@@ -216,7 +217,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 120
 theme_override_constants/margin_bottom = 10
 
-[node name="BottomButtons" type="HBoxContainer" parent="MC/VBoxContainer/BottomContainer"]
+[node name="BottomButtons" type="HBoxContainer" parent="CanvasLayer/MC/VBoxContainer/BottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -224,7 +225,7 @@ theme = ExtResource("1_clb3n")
 theme_override_constants/separation = 50
 alignment = 2
 
-[node name="Confirm" type="Button" parent="MC/VBoxContainer/BottomContainer/BottomButtons"]
+[node name="Confirm" type="Button" parent="CanvasLayer/MC/VBoxContainer/BottomContainer/BottomButtons"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 36
@@ -237,7 +238,7 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[node name="Back" type="Button" parent="MC/VBoxContainer/BottomContainer/BottomButtons"]
+[node name="Back" type="Button" parent="CanvasLayer/MC/VBoxContainer/BottomContainer/BottomButtons"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_font_sizes/font_size = 36
@@ -250,14 +251,14 @@ color = Color(0.164706, 0.207843, 0.254902, 1)
 fade_out_speed = 0.5
 fade_in_speed = 2.0
 
-[connection signal="finished" from="Control/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Graphics" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Graphics" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Sound" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Sound" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Interface" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Interface" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Language" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Language" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Control" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Control" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Debug" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Debug" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Default" to="MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Default" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/BottomContainer/BottomButtons/Confirm" to="MC/VBoxContainer/BottomContainer/BottomButtons/Confirm" method="_on_button_button_up"]
-[connection signal="button_up" from="MC/VBoxContainer/BottomContainer/BottomButtons/Back" to="MC/VBoxContainer/BottomContainer/BottomButtons/Back" method="_on_button_button_up"]
+[connection signal="finished" from="CanvasLayer/Control/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/General" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Graphics" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Graphics" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Sound" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Sound" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Interface" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Interface" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Language" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Language" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Control" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Control" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Debug" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Debug" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Default" to="CanvasLayer/MC/VBoxContainer/MiddleContainer/HBC/VBC/Buttons/Default" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/BottomContainer/BottomButtons/Confirm" to="CanvasLayer/MC/VBoxContainer/BottomContainer/BottomButtons/Confirm" method="_on_button_button_up"]
+[connection signal="button_up" from="CanvasLayer/MC/VBoxContainer/BottomContainer/BottomButtons/Back" to="CanvasLayer/MC/VBoxContainer/BottomContainer/BottomButtons/Back" method="_on_button_button_up"]
