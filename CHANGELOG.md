@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.1](https://github.com/nblackninja/godot-game-template-extended/compare/v1.17.0...v1.17.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* remove blur background and add shading ([0722eed](https://github.com/nblackninja/godot-game-template-extended/commit/0722eed2b0275be253583e56b753442705b69ce3))
+
 ## [1.17.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.16.0...v1.17.0) (2023-09-20)
 
 

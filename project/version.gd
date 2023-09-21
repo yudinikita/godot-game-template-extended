@@ -7,5 +7,5 @@ const MINOR := 17
 # x-release-please-end
 
 # x-release-please-start-patch
-const PATCH := 0
+const PATCH := 1
 # x-release-please-end
