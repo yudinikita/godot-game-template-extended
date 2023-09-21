@@ -10,6 +10,7 @@ extends Control
 
 func _ready():
 	SceneManager.reset_scene_manager()
+	SceneManager.set_back_limit(-1)
 	version.text = ProjectVersion.get_version()
 	play_btn.grab_focus()
 
