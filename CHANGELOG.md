@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/nblackninja/godot-game-template-extended/compare/v1.17.1...v2.0.0) (2023-09-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* make template public
+
+### Features
+
+* make template public ([223c110](https://github.com/nblackninja/godot-game-template-extended/commit/223c11072ac2847f3634bf855ffe3abe6f8d5109))
+
+
+### Bug Fixes
+
+* set back limit for scene manager ([a8e5d60](https://github.com/nblackninja/godot-game-template-extended/commit/a8e5d608863c02bcaa8a404d690e2d3d61ab12dc))
+
 ## [1.17.1](https://github.com/nblackninja/godot-game-template-extended/compare/v1.17.0...v1.17.1) (2023-09-21)
 
 
