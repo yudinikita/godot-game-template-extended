@@ -5,6 +5,7 @@ extends Control
 @export var timeout: float = 0.0
 @export var clickable: bool = false
 @export var add_to_back: bool = true
+@export var open_over_scene: bool = false
 
 @export_subgroup("Fade")
 @export_exp_easing var fade_out_speed: float = 1.0
@@ -88,7 +89,7 @@ func next_scene():
 		fade_in_speed, fade_in_pattern, fade_in_smoothness, fade_in_inverted
 	)
 	var general_options = SceneManager.create_general_options(
-		color, timeout, clickable, add_to_back
+		color, timeout, clickable, add_to_back, open_over_scene
 	)
 	SceneManager.change_scene_to_loaded_scene(fade_out_options, fade_in_options, general_options)
 

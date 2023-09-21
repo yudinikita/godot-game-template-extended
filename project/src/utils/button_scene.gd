@@ -12,6 +12,8 @@ extends Button
 @export var clickable: bool = false
 ## if true, you can go back to current scene after changing scene to next scene
 @export var add_to_back: bool = true
+## if true, the scene will open on top of the current scene
+@export var open_over_scene: bool = false
 
 @export_subgroup("Fade")
 @export_exp_easing var fade_out_speed: float = 1.0
@@ -59,8 +61,9 @@ var fade_in_pattern: String = "fade"
 @onready var fade_in_options = SceneManager.create_options(
 	fade_in_speed, fade_in_pattern, fade_in_smoothness, fade_in_inverted
 )
-@onready
-var general_options = SceneManager.create_general_options(color, timeout, clickable, add_to_back)
+@onready var general_options = SceneManager.create_general_options(
+	color, timeout, clickable, add_to_back, open_over_scene
+)
 
 
 func _ready() -> void:
@@ -88,4 +91,6 @@ func _on_reset_button_up():
 func _on_loading_scene_button_up():
 	if SceneManager.can_change_scene():
 		SceneManager.set_recorded_scene(scene)
-		SceneManager.change_scene("loading_scene", fade_out_options, fade_in_options, general_options)
+		SceneManager.change_scene(
+			"loading_scene", fade_out_options, fade_in_options, general_options
+		)

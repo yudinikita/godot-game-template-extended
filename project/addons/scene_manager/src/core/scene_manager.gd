@@ -6,6 +6,10 @@ signal load_finished
 signal load_percent_changed(value: int)
 ## Signal fires when scene changes
 signal scene_changed
+## Signal fires when scene opens
+signal scene_opened(key: String)
+## Signal fires when scene closes
+signal scene_closed
 ## Signal fires when fade in starts
 signal fade_in_started
 ## Signal fires when fade out starts
@@ -21,6 +25,7 @@ const BLACK: Color = Color(0, 0, 0)
 
 var validation_manager: SceneManagerValidation
 var stack_manager: SceneManagerStack
+var open_manager: SceneManagerStack
 var _load_scene: String = ""
 var _load_progress: Array = []
 var _recorded_scene: String = ""
@@ -44,12 +49,14 @@ class GeneralOptions:
 	var timeout: float = 0
 	var clickable: bool = true
 	var add_to_back: bool = true
+	var open_over_scene: bool = true
 
 
 # set current scene and get patterns from `addons/scene_manager/shader_patterns` folder
 func _ready() -> void:
 	validation_manager = SceneManagerValidation.new()
 	stack_manager = SceneManagerStack.new()
+	open_manager = SceneManagerStack.new()
 	set_process(false)
 	_set_starting_scene()
 	SceneManagerUtils.get_patterns(validation_manager.patterns)
@@ -99,13 +106,15 @@ func create_general_options(
 	color: Color = Color(0, 0, 0),
 	timeout: float = 0.0,
 	clickable: bool = true,
-	add_to_back: bool = true
+	add_to_back: bool = true,
+	open_over_scene: bool = false
 ) -> GeneralOptions:
 	var options: GeneralOptions = GeneralOptions.new()
 	options.color = color
 	options.timeout = timeout
 	options.clickable = clickable
 	options.add_to_back = add_to_back
+	options.open_over_scene = open_over_scene
 	return options
 
 
@@ -149,23 +158,22 @@ func change_scene(
 		_first_time = false
 		_set_in_transition()
 		_set_clickable(general_options.clickable)
-		_set_pattern(fade_out_options, general_options)
 
+		_set_pattern(fade_out_options, general_options)
 		if _fade_out(fade_out_options.fade_speed):
 			await _animation_player.animation_finished
 			fade_out_finished.emit()
 
-		if _change_scene(scene, general_options.add_to_back):
-			if !(scene is Node):
+		if _change_scene(scene, general_options.add_to_back, general_options.open_over_scene):
+			if !(scene is Node) && !(scene == "close") && !(general_options.open_over_scene):
 				await get_tree().node_added
 			scene_changed.emit()
 
 		if SceneManagerUtils.timeout(general_options.timeout, _animation_player):
 			await get_tree().create_timer(general_options.timeout).timeout
-
 			_animation_player.play(NO_COLOR, -1, 1, false)
-		_set_pattern(fade_in_options, general_options)
 
+		_set_pattern(fade_in_options, general_options)
 		if _fade_in(fade_in_options.fade_speed):
 			await _animation_player.animation_finished
 			fade_in_finished.emit()
@@ -180,14 +188,16 @@ func can_change_scene() -> bool:
 
 
 ## Change scene with no effect
-func no_effect_change_scene(scene, hold_timeout: float = 0.0, add_to_back: bool = true):
+func no_effect_change_scene(
+	scene, hold_timeout: float = 0.0, add_to_back: bool = true, open_over_scene: bool = false
+) -> void:
 	if validation_manager.is_valid_scene(scene) && can_change_scene():
 		_first_time = false
 		_set_in_transition()
 
 		await get_tree().create_timer(hold_timeout).timeout
 
-		if _change_scene(scene, add_to_back):
+		if _change_scene(scene, add_to_back, open_over_scene):
 			if !(scene is Node):
 				await get_tree().node_added
 
@@ -308,15 +318,18 @@ func _refresh() -> bool:
 
 
 ## Check different states of the scene and perform actual transitions
-func _change_scene(scene, add_to_back: bool) -> bool:
+func _change_scene(scene, add_to_back: bool, open_over_scene: bool) -> bool:
 	var success: bool = false
 
-	if scene is PackedScene:
-		success = _change_to_packed_scene(scene, add_to_back)
-	elif scene is Node:
-		success = _change_to_node_scene(scene, add_to_back)
+	if open_over_scene:
+		success = _open_scene(scene)
 	else:
-		success = _change_to_other_scene(scene, add_to_back)
+		if scene is PackedScene:
+			success = _change_to_packed_scene(scene, add_to_back)
+		elif scene is Node:
+			success = _change_to_node_scene(scene, add_to_back)
+		else:
+			success = _change_to_other_scene(scene, add_to_back)
 
 	return success
 
@@ -324,7 +337,7 @@ func _change_scene(scene, add_to_back: bool) -> bool:
 func _change_to_packed_scene(scene: PackedScene, add_to_back: bool) -> bool:
 	get_tree().change_scene_to_packed(scene)
 
-	var path: String = scene.resource_path
+	var path: String = SceneManagerUtils.get_path_scene(scene)
 	var found_key: String = SceneManagerUtils.find_scene_key(path)
 
 	if add_to_back && found_key != "":
@@ -339,7 +352,7 @@ func _change_to_node_scene(scene: Node, add_to_back: bool) -> bool:
 	root.add_child(scene)
 	get_tree().set_current_scene(scene)
 
-	var path: String = scene.scene_file_path
+	var path: String = SceneManagerUtils.get_path_scene(scene)
 	var found_key: String = SceneManagerUtils.find_scene_key(path)
 
 	if add_to_back && found_key != "":
@@ -364,13 +377,41 @@ func _change_to_other_scene(scene, add_to_back: bool) -> bool:
 		"exit", "quit":
 			get_tree().quit(0)
 
+		"close":
+			success = _close_scene()
+
 		_:
-			get_tree().change_scene_to_file(Scenes.scenes[scene]["value"])
+			get_tree().change_scene_to_file(SceneManagerUtils.get_path_scene(scene))
 			if add_to_back:
 				stack_manager.append_stack(scene)
 			success = true
 
 	return true
+
+
+func _open_scene(scene) -> bool:
+	var root = get_tree().get_root()
+	var path_scene = SceneManagerUtils.get_path_scene(scene)
+	var found_key: String = SceneManagerUtils.find_scene_key(path_scene)
+
+	var scene_instance = load(path_scene).instantiate()
+	if scene_instance:
+		root.add_child(scene_instance)
+		scene_opened.emit(found_key)
+		if found_key != "":
+			open_manager.append_stack(found_key)
+		return true
+	return false
+
+
+func _close_scene() -> bool:
+	var scene_node = SceneManagerUtils.get_last_open_scene(get_tree())
+	if scene_node:
+		scene_node.queue_free()
+		open_manager.pop_stack()
+		scene_closed.emit()
+		return true
+	return false
 
 
 ## Fade in with the specified speed (unit is in seconds)

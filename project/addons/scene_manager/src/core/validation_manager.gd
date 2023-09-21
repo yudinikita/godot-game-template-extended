@@ -4,7 +4,7 @@ extends Node
 
 var patterns: Dictionary = {}
 var _reserved_keys: Array = [
-	"back", "null", "ignore", "refresh", "reload", "restart", "exit", "quit"
+	"back", "null", "ignore", "refresh", "reload", "restart", "exit", "quit", "close"
 ]
 
 
