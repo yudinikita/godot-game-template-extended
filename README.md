@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://github.com/nblackninja/godot-game-template-extended/assets/36636599/6c69d38c-c168-4d92-8642-6b8fc89af540" alt="GGTE logo" width="150">
+   <img src="https://github.com/yudinikita/godot-game-template-extended/assets/36636599/6c69d38c-c168-4d92-8642-6b8fc89af540" alt="GGTE logo" width="150">
 </p>
 
 <h3 align="center">GGTE</h3>
@@ -65,13 +65,13 @@ Leverage our built-in localization capabilities to easily support multiple langu
 
 This template goes beyond the mentioned features and ensures adherence to official GDScript guidelines, verified through rigorous testing with gdlint. It seamlessly integrates with other Godot addons, allowing you to leverage its functionality alongside your existing tools and extensions. With this solution, you can confidently expand your project's capabilities while maintaining code quality and compatibility with the broader Godot ecosystem.
 
-[Video Demo](https://github.com/nblackninja/godot-game-template-extended/assets/36636599/1d1e170e-f9cd-4b7b-92ed-30c2e415c37f)
+[Video Demo](https://github.com/yudinikita/godot-game-template-extended/assets/36636599/1d1e170e-f9cd-4b7b-92ed-30c2e415c37f)
 
 ## 📝 Getting started
 
 ### 1. Installation
 
-1. [Create a new repo using this template](https://github.com/nblackninja/godot-game-template-extended/generate) or `Click Use` this template in Github ([learn more about Template Repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template))
+1. [Create a new repo using this template](https://github.com/yudinikita/godot-game-template-extended/generate) or `Click Use` this template in Github ([learn more about Template Repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template))
 2. Clone the new repository locally
 3. Open the project in Godot Engine 4
 4. You're all set!
@@ -199,6 +199,6 @@ The source code of this project is licensed under the MIT license, which can be 
 
 ---
 
-> nikitayudin782@gmail.com &nbsp;&middot;&nbsp;
-> GitHub [@nblackninja](https://github.com/с) &nbsp;&middot;&nbsp;
-> Telegram [@yudinikita](https://t.me/yudinikita)
+> Site [yudinikita.ru](https://yudinikita.ru) &nbsp;&middot;&nbsp;
+> Email <mail@yudinikita.ru> &nbsp;&middot;&nbsp;
+> GitHub [@yudinikita](https://github.com/yudinikita)
